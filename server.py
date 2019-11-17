@@ -10,8 +10,8 @@ def cadenita(cliente):
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #Creamos un objeto tipo socket
-s.bind(("127.0.0.1", 8080 ))
-#Lo enlazamos al localhost y al puerto
+s.bind(("", 8080 ))
+#Lo enlazamos a la ip que queda vacia para recibir clientes externos al localhost, y al puerto
 s.listen(5)
 #Maximo de peticiones encoladas
  
