@@ -29,8 +29,8 @@ while True:
         #recibe lo que el servidor manda desde su socket
         #el 1024 hace referencia al buffer
         recibido = recibido.decode('utf-8')
-        #if recibido == 'gordito':
-        #	print('Chiiiii')
+        if recibido == 'quit client':
+                sys.exit()
         #else:
         print("Recibido: \n", str(recibido))
  

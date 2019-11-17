@@ -1,4 +1,5 @@
 import socket
+import sys
 #importamos lo necesario para trabajar con sockets
 def cadenita(cliente):
         #funcion de prueba
@@ -27,17 +28,19 @@ while True:
         while True:
                 recibido = sc.recv(1024)
                 recibido = recibido.decode('utf-8')
-                #if recibido == 'quit': #orden para salir
-                #        print('salio')
-                #else:
+                if recibido == 'quit': #orden para salir
+                        print ("Adios")
+                        sc.send('quit client'.encode('utf-8'))
+                        sc.close()
+                        s.close()
+                        sys.exit()
+                else:
                 #        print ("Recibido: ", recibido) #imprime mensaje leido 
                 #        nuestra_respuesta = str(input(">>"))
                 #        #nuestra_respuesta = "Hola cliente" #manda esta respuesta al cliente
                 #        sc.send(nuestra_respuesta.encode('utf-8'))
-                cadenita(sc)
+                        cadenita(sc)
 
  
-print ("Adios")
-sc.close()
-s.close()
+
  
