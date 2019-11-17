@@ -1,0 +1,15 @@
+id, nombre, appat, apmat, dept_id, salario
+1,jorge,monterrosas,ramirez,1,20000
+2,hugo,delgadillo,cortez,2,20000
+3,diego,landeros,cerecero,1,20000
+4,luz,rueda,rojas,30000
+5,mitz,ruiz,sanchez,20,5000
+6,sari,valencia,ramirez,50,30000
+7,karen,vazquez,marquez,20,20000
+8,macos,corro,ortiz,50,15000
+9,hector,jimenez,contreras,10,10000
+10,flor,duval,cortez,15,20000
+11,juan,correa,mendez,2,40000
+12,karla,esquivel,ruiz,4,30000
+13,norma,bravo,valencia,5,2000
+14,julio,mendez,ayala,2,50000
