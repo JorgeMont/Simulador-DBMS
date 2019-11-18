@@ -194,7 +194,35 @@ def oracle(cliente, comando):
                 archivo.write(contenido)
                 archivo.close()
                 cliente.send('Fila actualizada'.encode('utf-8'))
-
+        #DELETE----------------------------- 
+        elif comando[0] == 'delete' and comando[1] == 'from':
+                archivo = open("bd_empleados.txt", "r+")
+                indice = 0
+                pk = 0
+                pk_delete = int(comando[6])
+                contenido = ''
+                for line in archivo:
+                        #recorre cada linea del archivo para ver cual es el que se debe eliminar
+                        if indice == 0:
+                                contenido = contenido + line #copia el encabezado
+                                indice += 1
+                                pk += 1
+                        elif indice == pk_delete: ##cuando no es encabezado
+                                ##cuando el indice sea la tupla que se quiere borrar
+                                indice += 1
+                        else:
+                                tupla = line.split(',')
+                                tupla[0] = str(pk)
+                                tupla = ','.join(tupla)
+                                contenido = contenido + tupla
+                                indice += 1
+                                pk += 1
+                #print(contenido)        
+                archivo.close()
+                archivo = open('bd_empleados.txt', 'w')
+                archivo.write(contenido)
+                archivo.close()
+                cliente.send('Fila eliminada'.encode('utf-8'))
 #FIN DE DEFINICION DE FUNCION ORACLE
 #---------------------------------------------------
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
