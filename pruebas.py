@@ -40,7 +40,12 @@
 #     archivo.close()
 #------------------------------------------------
 #recibimos la ip y el puerto
-parametros = str(input("Indique IP y puerto: ")).split(" ")
-#Lo convertimos en cadena, lo separamos como lista para tener dos elementos, la ip y el puerto
-print(parametros[0]) #la ip
-print(parametros[1]) #el puerto
+# parametros = str(input("Indique IP y puerto: ")).split(" ")
+# #Lo convertimos en cadena, lo separamos como lista para tener dos elementos, la ip y el puerto
+# print(parametros[0]) #la ip
+# print(parametros[1]) #el puerto
+archivo = open("bd_empleados.txt", "r+")
+contenido = archivo.readlines()
+print(contenido)
+
+archivo.close()
