@@ -13,3 +13,6 @@ id, nombre, appat, apmat, dept_id, salario
 12,karla,esquivel,ruiz,4,30000
 13,norma,bravo,valencia,5,2000
 14,julio,mendez,ayala,2,50000
+15,'brenda','ramirez','hernandez',5,50000
+16,brenda,rodgriquez,islas,4,30000
+17,gema,davila,magana,4,5000

@@ -47,9 +47,9 @@ def oracle(cliente, comando):
                                 cliente.send(contenido.encode('utf-8'))
 
                         elif comando[2] == 'from' and comando[3] != 'empleados':
-                            print('Tabla no encontrada...')
+                            cliente.send('Tabla no encontrada ...'.encode('utf-8'))
                         else: 
-                            print('comando erroneo...')
+                            cliente.send('Comando erroneo ...'.encode('utf-8'))
                 #cuando el segundo elemento del comando es el nombre
                 elif comando[1] == 'nombre':
                         #cuando el segundo elemento del comando es nombre
@@ -62,9 +62,9 @@ def oracle(cliente, comando):
                                         contenido = contenido + registro[1] + '\n'
                                 cliente.send(contenido.encode('utf-8'))
                         elif comando[2] == 'from' and comando[3] != 'empleados':
-                            print('Tabla no encontrada...')
+                            cliente.send('Tabla no encontrada ...'.encode('utf-8'))
                         else: 
-                            print('comando erroneo...')
+                            cliente.send('Comando erroneo ...'.encode('utf-8'))
                 #CUANDO EL SEGUNDO ELEMENTO ES EL APELLIDO PATERNO
                 elif comando[1] == 'appat':
                         if comando[2] == 'from' and comando[3] == 'empleados':
@@ -76,9 +76,9 @@ def oracle(cliente, comando):
                                         contenido = contenido + registro[2] + '\n'
                                 cliente.send(contenido.encode('utf-8'))
                         elif comando[2] == 'from' and comando[3] != 'empleados':
-                                print('Tabla no encontrada...')
+                                cliente.send('Tabla no encontrada ...'.encode('utf-8'))
                         else: 
-                                print('comando erroneo...')
+                                cliente.send('Comando erroneo ...'.encode('utf-8'))
                 #CUANDO EL SEGUNDO ELEMENTO ES EL APELLIDO MATERNO
                 elif comando[1] == 'apmat':
                         if comando[2] == 'from' and comando[3] == 'empleados':
@@ -90,9 +90,9 @@ def oracle(cliente, comando):
                                         contenido = contenido + registro[3] + '\n'
                                 cliente.send(contenido.encode('utf-8'))
                         elif comando[2] == 'from' and comando[3] != 'empleados':
-                                print('Tabla no encontrada...')
+                                cliente.send('Tabla no encontrada ...'.encode('utf-8'))
                         else: 
-                                print('comando erroneo...')
+                                cliente.send('Comando erroneo ...'.encode('utf-8'))
                 #CUANDO EL SEGUNDO ELEMENTO ES EL ID DEL DEPARTAMENTO
                 elif comando[1] == 'dept_id':
                         if comando[2] == 'from' and comando[3] == 'empleados':
@@ -104,9 +104,9 @@ def oracle(cliente, comando):
                                         contenido = contenido + registro[4] + '\n'
                                 cliente.send(contenido.encode('utf-8'))
                         elif comando[2] == 'from' and comando[4] != 'empleados':
-                                print('Tabla no encontrada...')
+                                cliente.send('Tabla no encontrada ...'.encode('utf-8'))
                         else: 
-                                print('comando erroneo...')
+                                cliente.send('Comando erroneo ...'.encode('utf-8'))
                 #CUANDO EL SEGUNDO ELEMENTO ES EL APELLIDO SALARIO
                 elif comando[1] == 'salario':
                         if comando[2] == 'from' and comando[3] == 'empleados':
@@ -118,12 +118,37 @@ def oracle(cliente, comando):
                                         contenido = contenido + registro[5] + '\n'
                                 cliente.send(contenido.encode('utf-8'))
                         elif comando[2] == 'from' and comando[3] != 'empleados':
-                                print('Tabla no encontrada...')
+                                cliente.send('Tabla no encontrada ...'.encode('utf-8'))
                         else: 
-                                print('comando erroneo...')
-                
+                                cliente.send('Comando erroneo ...'.encode('utf-8'))
                 file.close()
-
+        #INSERT---------------------------------------
+        elif comando[0] == 'insert' and comando[1] == 'into': 
+                # si el primer comando es insert y el segundo es un into se reconoce la orden
+                if comando[2] == 'empleados': # verificamos que la tabla sea la unica existente que en este caso es empleados
+                        #Leer y validar el VALUES
+                        #LOS VALORES A INSERTAR SE GUARDAN EN VARIABLES
+                        #calcular el id
+                        file = open('bd_empleados.txt','r')
+                        v_id = len(file.readlines())
+                        file.close()
+                        #removemos los primeros caracteres que son el 'values('
+                        v_nom = comando[3]
+                        v_nom = v_nom[7:]
+                        v_appat = comando[4]
+                        v_apmat = comando[5]
+                        v_deptid = comando[6]
+                        v_sal = comando[7]
+                        v_sal = v_sal.replace(")", "")
+                        # valores.replace(" ", "")
+                        # #la cadena queda unicamente con los valores definitivos a insertar en la BD
+                        #print(v_id, v_nom, v_appat, v_apmat, v_deptid, v_sal)
+                        file = open('bd_empleados.txt','a')
+                        file.write(str(v_id) + ',' + v_nom + v_appat + v_apmat + v_deptid + v_sal)
+                        file.close()
+                        cliente.send('Fila agregada'.encode('utf-8'))
+                else:
+                        cliente.send('Tabla no encontrada...'.encode('utf-8'))    
 
 #FIN DE DEFINICION DE FUNCION ORACLE
 #---------------------------------------------------
@@ -146,8 +171,8 @@ while True:
         while True:
                 recibido = sc.recv(1024)
                 recibido = recibido.decode('utf-8')
-                if recibido == 'quit': #orden para salir
-                        print ("Adios")
+                if recibido == 'salir': #orden para salir
+                        print ("Adios cliente")
                         sc.send('quit client'.encode('utf-8'))
                         sc.close()
                         s.close()
