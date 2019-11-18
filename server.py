@@ -148,7 +148,52 @@ def oracle(cliente, comando):
                         file.close()
                         cliente.send('Fila agregada'.encode('utf-8'))
                 else:
-                        cliente.send('Tabla no encontrada...'.encode('utf-8'))    
+                        cliente.send('Tabla no encontrada...'.encode('utf-8'))   
+        #UPDATE----------------------------- 
+        elif comando[0] == 'update' and comando[1] == 'empleados' and comando[2] == 'set':
+                #Si el primer elemento del comando es un update entonces...
+                archivo = open("bd_empleados.txt", "r+")
+                indice = 0
+                pk_update = int(comando[9])
+                contenido = ''
+                for line in archivo:
+                        tupla = line
+                        if indice == pk_update:
+                                #aqui va lo de sustituir
+                                tupla = tupla.split(',')
+                                if comando[3] == 'nombre': #esto para cada campo
+                                        tupla[1] = comando[5]
+                                        # tupla = str(tupla)
+                                        #tupla = str(tupla).translate({ord(i): None for i in '[]"'})
+                                        #tupla = str(tupla)
+                                        nueva_tupla = ','.join(tupla)
+                                        contenido = contenido + nueva_tupla
+                                elif comando[3] == 'appat':
+                                        tupla[2] = comando[5]
+                                        nueva_tupla = ','.join(tupla)
+                                        contenido = contenido + nueva_tupla
+                                elif comando[3] == 'apmat':
+                                        tupla[3] = comando[5]
+                                        nueva_tupla = ','.join(tupla)
+                                        contenido = contenido + nueva_tupla
+                                elif comando[3] == 'dept_id':
+                                        tupla[4] = comando[5]
+                                        nueva_tupla = ','.join(tupla)
+                                        contenido = contenido + nueva_tupla
+                                elif comando[3] == 'salario':
+                                        tupla[5] = comando[5]
+                                        nueva_tupla = ','.join(tupla)
+                                        contenido = contenido + nueva_tupla
+                        else:
+                                contenido = contenido + tupla
+                                #print(len(tupla))
+                        indice += 1
+                #print(contenido)        
+                archivo.close()
+                archivo = open('bd_empleados.txt', 'w')
+                archivo.write(contenido)
+                archivo.close()
+                cliente.send('Fila actualizada'.encode('utf-8'))
 
 #FIN DE DEFINICION DE FUNCION ORACLE
 #---------------------------------------------------
@@ -172,7 +217,7 @@ while True:
                 recibido = sc.recv(1024)
                 recibido = recibido.decode('utf-8')
                 if recibido == 'salir': #orden para salir
-                        print ("Adios cliente")
+                        print ("Salio el cliente")
                         sc.send('quit client'.encode('utf-8'))
                         sc.close()
                         s.close()
