@@ -133,18 +133,21 @@ def oracle(cliente, comando):
                         v_id = len(file.readlines())
                         file.close()
                         #removemos los primeros caracteres que son el 'values('
-                        v_nom = comando[3]
-                        v_nom = v_nom[7:]
-                        v_appat = comando[4]
-                        v_apmat = comando[5]
-                        v_deptid = comando[6]
-                        v_sal = comando[7]
+                        valores = comando[3]
+                        valores = valores[7:]
+                        valores = valores.split(",")
+                        print(valores)
+                        v_nom = valores[0]
+                        v_appat = valores[1]
+                        v_apmat = valores[2]
+                        v_deptid = valores[3]
+                        v_sal = valores[4]
                         v_sal = v_sal.replace(")", "")
                         # valores.replace(" ", "")
                         # #la cadena queda unicamente con los valores definitivos a insertar en la BD
                         #print(v_id, v_nom, v_appat, v_apmat, v_deptid, v_sal)
                         file = open('bd_empleados.txt','a')
-                        file.write(str(v_id) + ',' + v_nom + v_appat + v_apmat + v_deptid + v_sal)
+                        file.write(str(v_id) + ',' + v_nom + ',' + v_appat + ',' + v_apmat + ',' + v_deptid + ',' + v_sal)
                         file.close()
                         cliente.send('Fila agregada'.encode('utf-8'))
                 else:

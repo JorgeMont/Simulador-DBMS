@@ -29,11 +29,12 @@ while True:
         #recibe lo que el servidor manda desde su socket
         #el 1024 hace referencia al buffer
         recibido = recibido.decode('utf-8')
+        #cuando el cliente manda "salir" como servidor recibimos un quit client y termina la ejecucion
         if recibido == 'quit client':
+                print ("Adios")
+                socket_cliente.close()
                 sys.exit()
         #else:
         print("Recibido: \n", str(recibido))
- 
-print ("Adios")
-socket_cliente.close()
+        #Recepcion de comando exitosa
  
