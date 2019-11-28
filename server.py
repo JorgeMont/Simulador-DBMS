@@ -3,12 +3,6 @@ import sys
 #importamos lo necesario para trabajar con sockets
 
 #DEFINICION DE FUNCION ORACLE
-def cadenita(cliente):
-        #funcion de prueba
-        #nuestra_respuesta = str(input(">>"))
-        nuestra_respuesta = 'id,nombre,appat,apmat,dept_id,salario \n 1,jorge,monterrosas,ramirez,1,20000'
-        cliente.send(nuestra_respuesta.encode('utf-8'))
-
 def oracle(cliente, comando):
         comando = comando.lower()
         #transforma a minuscula el comando recibido del cliente
@@ -235,7 +229,7 @@ s.bind(("", 8080 ))
 s.listen(5)
 #Maximo de peticiones encoladas
  
-print ("Servidor de Chat\n")
+print ("Servidor: \n")
 while True: 
         #Siempre esperando una conexion
         print ("Esperando conexión...")
@@ -254,13 +248,9 @@ while True:
                         s.close()
                         sys.exit()
                 else:
-                #        print ("Recibido: ", recibido) #imprime mensaje leido 
-                #        nuestra_respuesta = str(input(">>"))
-                #        #nuestra_respuesta = "Hola cliente" #manda esta respuesta al cliente
-                #        sc.send(nuestra_respuesta.encode('utf-8'))
-                        #cadenita(sc)
                         oracle(sc, recibido)
                         #funcion oracle, recibe el socket del cliente y la cadena que recibe el server
+                        #La funcion oracle lleva toda la carga de manejar el archivo y simulas el DBMS
 
  
 
